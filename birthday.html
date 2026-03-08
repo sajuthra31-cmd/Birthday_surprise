@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Surprise</title>
+
+<style>
+
+body{
+background:black;
+color:white;
+text-align:center;
+font-family:Arial;
+}
+
+h1{
+color:pink;
+margin-top:30px;
+}
+
+img{
+width:300px;
+border-radius:15px;
+margin-top:30px;
+}
+
+button{
+padding:12px 25px;
+font-size:18px;
+margin-top:20px;
+background:pink;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+video{
+width:400px;
+margin-top:30px;
+border-radius:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Happy Birthday My sayalli 🎉</h1>
+<p>Click to see our memories ❤️</p>
+
+<img id="photo" src="photo1.jpg">
+
+<br>
+
+<button onclick="nextMemory()">Next Memory ➜</button>
+
+<br><br>
+
+<video id="video1" controls style="display:none;">
+<source src="video1.mp4" type="video/mp4">
+</video>
+
+<video id="video2" controls style="display:none;">
+<source src="video2.mp4" type="video/mp4">
+</video>
+
+<script>
+
+let photos = [
+"photo1.jpg",
+"photo2.jpg",
+"photo3.jpg",
+"photo4.jpg",
+"photo5.jpg",
+"photo6.jpg",
+"photo7.jpg",
+"photo8.jpg",
+"photo9.jpg",
+"photo10.jpg",
+];
+
+let index = 0;
+
+function nextMemory(){
+
+index++;
+
+if(index < photos.length){
+document.getElementById("photo").src = photos[index];
+}
+
+else if(index == photos.length){
+document.getElementById("photo").style.display="none";
+document.getElementById("video1").style.display="block";
+}
+
+else if(index == photos.length + 1){
+document.getElementById("video1").style.display="none";
+document.getElementById("video2").style.display="block";
+}
+
+}
+
+</script>
+
+</body>
+</html>
