@@ -6,51 +6,67 @@
 <style>
 
 body{
-    text-align:center;
-    font-family:Arial;
-    background:linear-gradient(120deg,#ffd6e7,#d6f0ff,#fff3c4);
-    overflow:hidden;
+margin:0;
+text-align:center;
+font-family:cursive;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
+overflow:hidden;
 }
 
-/* Photo & video size */
-#media{
-    width:60%;
-    height:auto;
-    max-height:350px;
-    object -fit:contain;
-    border-radius:15px;
-    margin-top:40px;
-    box-shadow:0 0 20px pink;
-}
-
-/* Next button */
-button{
-    padding:12px 25px;
-    font-size:18px;
-    margin-top:20px;
-    border:none;
-    border-radius:10px;
-    background:#ff4da6;
-    color:white;
-    cursor:pointer;
-}
-
-/* flying angels */
+/* Angels animation */
 .angel{
-    position:absolute;
-    font-size:30px;
-    animation:fly 10s linear infinite;
+position:absolute;
+font-size:40px;
+animation:fly 12s linear infinite;
 }
 
 @keyframes fly{
-    from{transform:translateX(-100px);}
-    to{transform:translateX(110vw);}
+0%{left:-10%; top:20%;}
+100%{left:110%; top:80%;}
 }
 
-/* cake animation */
-.cake{
-    font-size:70px;
-    margin-top:50px;
+/* Candles corner */
+.candle{
+position:fixed;
+font-size:40px;
+}
+
+#c1{top:10px;left:10px;}
+#c2{top:10px;right:10px;}
+#c3{bottom:10px;left:10px;}
+#c4{bottom:10px;right:10px;}
+
+.container{
+margin-top:80px;
+}
+
+img,video{
+max-width:85%;
+max-height:70vh;
+border-radius:20px;
+box-shadow:0 0 20px pink;
+}
+
+button{
+margin-top:20px;
+padding:10px 25px;
+font-size:20px;
+border:none;
+border-radius:20px;
+background:#ff4da6;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#ff1a8c;
+}
+
+#final{
+display:none;
+margin-top:80px;
+font-size:28px;
+color:#fff;
 }
 
 </style>
@@ -58,20 +74,49 @@ button{
 
 <body>
 
-<h1>🎉 Special  Memories 🎉</h1>
+<!-- candles -->
+<div class="candle" id="c1">🕯️</div>
+<div class="candle" id="c2">🕯️</div>
+<div class="candle" id="c3">🕯️</div>
+<div class="candle" id="c4">🕯️</div>
 
-<img id="media" src="photo1.jpg">
+<!-- angels -->
+<div class="angel" style="animation-delay:0s;">👼</div>
+<div class="angel" style="animation-delay:4s;">👼</div>
+<div class="angel" style="animation-delay:8s;">👼</div>
+
+<div class="container">
+
+<img id="photo" src="photo1.jpg">
+
+<video id="video" controls style="display:none;">
+<source id="videosrc" src="">
+</video>
 
 <br>
-<button onclick="nextMedia()" id="nextBtn">Next</button>
 
-<div class="angel" style="top:20%">👼</div>
-<div class="angel" style="top:50%;animation-delay:3s;">👼</div>
-<div class="angel" style="top:70%;animation-delay:6s;">👼</div>
+<button id="nextBtn" onclick="next()">Next</button>
+
+</div>
+
+<div id="final">
+<h1>🎂 Happy Birthday my sayali 💗🫂</h1>
+<div style="font-size:60px">🎂🕯️🕯️🕯️</div>
+<p>
+Happy Birthday my dear ❤️  
+You are the most special person in my life.  
+May your day be filled with happiness
+Always keep smiling 😊
+thank you di....ne epayum enkuda erunthu eruka
+and namba evalo sanda potalum u still choses me❤️
+ithuku mela sona ne scene poduva.....ithoda stop panikuren
+once again happiest bday my darling💗
+</p>
+</div>
 
 <script>
 
-let items=[
+let photos=[
 "photo1.jpg",
 "photo2.jpg",
 "photo3.jpg",
@@ -81,48 +126,47 @@ let items=[
 "photo7.jpg",
 "photo8.jpg",
 "photo9.jpg",
-"photo10.jpg",
+"photo10.jpg"
+];
+
+let videos=[
 "video1.mp4",
 "video2.mp4"
 ];
 
 let index=0;
 
-function nextMedia(){
+function next(){
 
 index++;
 
-if(index < items.length){
+if(index<photos.length){
 
-if(items[index].includes("mp4")){
-document.getElementById("media").outerHTML=
-`<video id="media" controls autoplay>
-<source src="${items[index]}" type="video/mp4">
-</video>`;
-}
-else{
-document.getElementById("media").outerHTML=
-`<img id="media" src="${items[index]}">`;
-}
+document.getElementById("photo").style.display="block";
+document.getElementById("video").style.display="none";
+document.getElementById("photo").src=photos[index];
 
 }
 
-if(index==items.length-1){
+else if(index==photos.length){
+
+document.getElementById("photo").style.display="none";
+document.getElementById("video").style.display="block";
+document.getElementById("videosrc").src=videos[0];
+document.getElementById("video").load();
+
+}
+
+else if(index==photos.length+1){
+
+document.getElementById("videosrc").src=videos[1];
+document.getElementById("video").load();
 document.getElementById("nextBtn").style.display="none";
 
-setTimeout(()=>{
-document.body.innerHTML+=`
-<div class="cake">🎂🕯🕯🕯</div>
-<h2>Happy Birthday My darling ❤️</h2>
-<h3>May your life be filled with happiness...!
-my dear sayalii..thank you for staying with me for all the times..
-enna epayum ne tolerate pani eruka di..i know ennoda polambals lam bore 
-adikama ketu eruka..ennoda saddest and happiest part la ne erunthu eruka
-and namba evalo sanda potatulm u still chooses me..na unnakaga serichi erukan 
-aluthum erukan..but unkuda erukura bond eh veraa...ethuku melAa sonna ne scene poduva
-soo...once again happisest bday my  sayali..destination ku ready agikoo diiii</h3>
-`;
-},5000);
+document.getElementById("video").onended=function(){
+document.querySelector(".container").style.display="none";
+document.getElementById("final").style.display="block";
+}
 
 }
 
