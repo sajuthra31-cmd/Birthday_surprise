@@ -6,67 +6,72 @@
 <style>
 
 body{
-background:black;
-color:white;
-text-align:center;
-font-family:Arial;
+    text-align:center;
+    font-family:Arial;
+    background:linear-gradient(120deg,#ffd6e7,#d6f0ff,#fff3c4);
+    overflow:hidden;
 }
 
-h1{
-color:pink;
-margin-top:30px;
+/* Photo & video size */
+#media{
+    width:60%;
+    height:auto;
+    max-height:350px;
+    object -fit:contain;
+    border-radius:15px;
+    margin-top:40px;
+    box-shadow:0 0 20px pink;
 }
 
-img{
-width:300px;
-border-radius:15px;
-margin-top:30px;
-}
-
+/* Next button */
 button{
-padding:12px 25px;
-font-size:18px;
-margin-top:20px;
-background:pink;
-border:none;
-border-radius:10px;
-cursor:pointer;
+    padding:12px 25px;
+    font-size:18px;
+    margin-top:20px;
+    border:none;
+    border-radius:10px;
+    background:#ff4da6;
+    color:white;
+    cursor:pointer;
 }
 
-video{
-width:400px;
-margin-top:30px;
-border-radius:15px;
+/* flying angels */
+.angel{
+    position:absolute;
+    font-size:30px;
+    animation:fly 10s linear infinite;
+}
+
+@keyframes fly{
+    from{transform:translateX(-100px);}
+    to{transform:translateX(110vw);}
+}
+
+/* cake animation */
+.cake{
+    font-size:70px;
+    margin-top:50px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<h1>Happy Birthday My sayalli 🎉</h1>
-<p>Click to see our memories ❤️</p>
+<h1>🎉 Special  Memories 🎉</h1>
 
-<img id="photo" src="photo1.jpg">
+<img id="media" src="photo1.jpg">
 
 <br>
+<button onclick="nextMedia()" id="nextBtn">Next</button>
 
-<button onclick="nextMemory()">Next Memory ➜</button>
-
-<br><br>
-
-<video id="video1" controls style="display:none;">
-<source src="video1.mp4" type="video/mp4">
-</video>
-
-<video id="video2" controls style="display:none;">
-<source src="video2.mp4" type="video/mp4">
-</video>
+<div class="angel" style="top:20%">👼</div>
+<div class="angel" style="top:50%;animation-delay:3s;">👼</div>
+<div class="angel" style="top:70%;animation-delay:6s;">👼</div>
 
 <script>
 
-let photos = [
+let items=[
 "photo1.jpg",
 "photo2.jpg",
 "photo3.jpg",
@@ -77,26 +82,48 @@ let photos = [
 "photo8.jpg",
 "photo9.jpg",
 "photo10.jpg",
+"video1.mp4",
+"video2.mp4"
 ];
 
-let index = 0;
+let index=0;
 
-function nextMemory(){
+function nextMedia(){
 
 index++;
 
-if(index < photos.length){
-document.getElementById("photo").src = photos[index];
+if(index < items.length){
+
+if(items[index].includes("mp4")){
+document.getElementById("media").outerHTML=
+`<video id="media" controls autoplay>
+<source src="${items[index]}" type="video/mp4">
+</video>`;
+}
+else{
+document.getElementById("media").outerHTML=
+`<img id="media" src="${items[index]}">`;
 }
 
-else if(index == photos.length){
-document.getElementById("photo").style.display="none";
-document.getElementById("video1").style.display="block";
 }
 
-else if(index == photos.length + 1){
-document.getElementById("video1").style.display="none";
-document.getElementById("video2").style.display="block";
+if(index==items.length-1){
+document.getElementById("nextBtn").style.display="none";
+
+setTimeout(()=>{
+document.body.innerHTML+=`
+<div class="cake">🎂🕯🕯🕯</div>
+<h2>Happy Birthday My darling ❤️</h2>
+<h3>May your life be filled with happiness...!
+my dear sayalii..thank you for staying with me for all the times..
+enna epayum ne tolerate pani eruka di..i know ennoda polambals lam bore 
+adikama ketu eruka..ennoda saddest and happiest part la ne erunthu eruka
+and namba evalo sanda potatulm u still chooses me..na unnakaga serichi erukan 
+aluthum erukan..but unkuda erukura bond eh veraa...ethuku melAa sonna ne scene poduva
+soo...once again happisest bday my  sayali..destination ku ready agikoo diiii</h3>
+`;
+},5000);
+
 }
 
 }
