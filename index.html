@@ -1,178 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Birthday Surprise</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Sayalii 💗</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #ffecd2, #fcb69f, #a8edea, #fed6e3);
+            background-size: 600% 600%;
+            animation: gradientShift 20s ease infinite;
+            height: 100vh; overflow: hidden; position: relative;
+            display: flex; justify-content: center; align-items: center;
+        }
+        @keyframes gradientShift { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+        
+        .angel { position: absolute; font-size: 25px; animation: fly 12s linear infinite; }
+        .star { position: absolute; font-size: 20px; animation: sparkle 8s ease-in-out infinite; }
+        @keyframes fly { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-100px) rotate(360deg); opacity: 0; } }
+        @keyframes sparkle { 0%,100%{opacity:0.3; transform:scale(1);} 50%{opacity:1; transform:scale(1.2);}}
 
-<style>
-
-body{
-margin:0;
-text-align:center;
-font-family:cursive;
-background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
-overflow:hidden;
-}
-
-/* Angels animation */
-.angel{
-position:absolute;
-font-size:40px;
-animation:fly 12s linear infinite;
-}
-
-@keyframes fly{
-0%{left:-10%; top:20%;}
-100%{left:110%; top:80%;}
-}
-
-/* Candles corner */
-.candle{
-position:fixed;
-font-size:40px;
-}
-
-#c1{top:10px;left:10px;}
-#c2{top:10px;right:10px;}
-#c3{bottom:10px;left:10px;}
-#c4{bottom:10px;right:10px;}
-
-.container{
-margin-top:80px;
-}
-
-img,video{
-max-width:85%;
-max-height:70vh;
-border-radius:20px;
-box-shadow:0 0 20px pink;
-}
-
-button{
-margin-top:20px;
-padding:10px 25px;
-font-size:20px;
-border:none;
-border-radius:20px;
-background:#ff4da6;
-color:white;
-cursor:pointer;
-}
-
-button:hover{
-background:#ff1a8c;
-}
-
-#final{
-display:none;
-margin-top:80px;
-font-size:28px;
-color:#fff;
-}
-
-</style>
+        .screen { display: none; text-align: center; position: relative; z-index: 10; color: #fff; text-shadow: 0 3px 6px rgba(0,0,0,0.4); min-height: 100vh; padding: 20px; }
+        .screen.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        h1 { font-family: 'Dancing Script', cursive; font-size: 4em; margin: 20px 0; }
+        h2 { font-size: 2.5em; margin: 30px 0; }
+        .countdown { font-size: 8em; font-weight: 900; margin: 40px 0; color: #ff6b9d; text-shadow: 0 0 20px #ff6b9d; }
+        
+        .cake { width: 350px; height: 220px; background: linear-gradient(145deg, #ffb347, #ff8c42); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; margin: 40px auto; cursor: pointer; position: relative; transition: all 0.4s; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .cake:hover { transform: scale(1.05) rotate(2deg); }
+        .candle { position: absolute; top: -25px; width: 10px; height: 45px; background: linear-gradient(#ffeb3b, #ffd700); border-radius: 5px 5px 0 0; box-shadow: 0 0 10px #ffeb3b; }
+        .candle::before { content: '✨'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-size: 18px; animation: flicker 0.8s infinite alternate; }
+        @keyframes flicker { 0%{opacity:0.8; transform:translateX(-50%) scale(1);} 100%{opacity:1; transform:translateX(-50%) scale(1.1);} }
+        .candle:nth-child(1) { left: 60px; }
+        .candle:nth-child(2) { right: 60px; }
+        .candle:nth-child(3) { left: 120px; }
+        .candle:nth-child(4) { right: 120px; }
+        
+        .gallery img, .gallery video { width: 90%; max-width: 600px; max-height: 70vh; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); margin: 30px 0; object-fit: cover; }
+        
+        button { background: linear-gradient(45deg, #ff6b9d, #c44569); color: white; border: none; padding: 18px 40px; font-size: 1.3em; border-radius: 50px; cursor: pointer; margin: 15px; transition: all 0.3s; box-shadow: 0 10px 30px rgba(255,107,157,0.4); font-weight: 600; }
+        button:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(255,107,157,0.6); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        
+        .quiz { max-width: 600px; background: rgba(255,255,255,0.15); padding: 40px; border-radius: 25px; backdrop-filter: blur(10px); }
+        .quiz h3 { color: #fff; font-size: 2em; margin-bottom: 30px; }
+        .options { display: flex; flex-direction: column; gap: 15px; }
+        .option { background: rgba(255,255,255,0.25); padding: 20px; border-radius: 20px; cursor: pointer; transition: all 0.3s; font-size: 1.1em; }
+        .option:hover { background: rgba(255,255,255,0.4); transform: translateX(10px); }
+        .option.selected { background: linear-gradient(45deg, #ff6b9d, #c44569); transform: scale(1.02); }
+        
+        input[type="text"] { width: 85%; max-width: 500px; padding: 20px; font-size: 1.2em; border: 3px solid rgba(255,255,255,0.3); border-radius: 15px; margin: 20px 0; text-align: center; background: rgba(255,255,255,0.2); font-family: inherit; color: #fff; }
+        input[type="text"]::placeholder { color: rgba(255,255,255,0.7); }
+        
+        .results { background: rgba(255,255,255,0.2); padding: 40px; border-radius: 25px; max-width: 700px; backdrop-filter: blur(10px); }
+        .results p { font-size: 1.2em; margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 15px; }
+    </style>
 </head>
-
 <body>
+    <!-- Flying Angels & Stars -->
+    <div class="angel" style="left:10%; animation-delay:0s;">🕊️</div>
+    <div class="angel" style="left:25%; animation-delay:2s;">🕊️</div>
+    <div class="angel" style="left:40%; animation-delay:4s;">🕊️</div>
+    <div class="angel" style="left:70%; animation-delay:1s;">🕊️</div>
+    <div class="angel" style="left:85%; animation-delay:3s;">🕊️</div>
+    <div class="star" style="left:15%; animation-delay:1s;">✨</div>
+    <div class="star" style="left:50%; animation-delay:3s;">⭐</div>
+    <div class="star" style="left:80%; animation-delay:5s;">💫</div>
 
-<!-- candles -->
-<div class="candle" id="c1">🕯️</div>
-<div class="candle" id="c2">🕯️</div>
-<div class="candle" id="c3">🕯️</div>
-<div class="candle" id="c4">🕯️</div>
+    <!-- Screens -->
+    <div id="countdown" class="screen active">
+        <h1 id="count" class="countdown">3</h1>
+    </div>
+    
+    <div id="birthday" class="screen">
+        <h1>Happy Birthday Sayalii 💗🫶</h1>
+        <button onclick="nextScreen('cake')">Continue</button>
+    </div>
+    
+    <div id="cake" class="screen">
+        <h2>Touch the cake for surprise! 🎂</h2>
+        <div class="cake" onclick="nextScreen('photos')">
+            <div class="candle"></div><div class="candle"></div><div class="candle"></div><div class="candle"></div>
+        </div>
+    </div>
+    
+    <div id="photos" class="screen">
+        <h2>Our Memories 💕</h2>
+        <div class="gallery">
+            <img id="photo1" src="photo1.jpg" style="display:none;">
+            <img id="photo2" src="photo2.jpg" style="display:none;">
+            <img id="photo3" src="photo3.jpg" style="display:none;">
+            <img id="photo4" src="photo4.jpg" style="display:none;">
+            <img id="photo5" src="photo5.jpg" style="display:none;">
+            <img id="photo6" src="photo6.jpg" style="display:none;">
+            <img id="photo7" src="photo7.jpg" style="display:none;">
+            <img id="photo8" src="photo8.jpg" style="display:none;">
+            <img id="photo9" src="photo9.jpg" style="display:none;">
+            <img id="photo10" src="photo10.jpg" style="display:none;">
+            <button id="nextPhoto" onclick="nextPhoto()">Next ➡️</button>
+        </div>
+    </div>
+    
+    <div id="videos" class="screen">
+        <h2>Special Videos 🌟</h2>
+        <div class="gallery">
+            <video id="video1" src="video1.mp4" controls style="display:none;"></video>
+            <video id="video2" src="video2.mp4" controls style="display:none;"></video>
+            <button id="nextVideo" onclick="nextVideo()" style="display:none;">Next Video ➡️</button>
+            <button id="quizBtn" onclick="nextScreen('quiz1')" style="display:none;">Play Game! 🎮</button>
+        </div>
+    </div>
 
-<!-- angels -->
-<div class="angel" style="animation-delay:0s;">👼</div>
-<div class="angel" style="animation-delay:4s;">👼</div>
-<div class="angel" style="animation-delay:8s;">👼</div>
+    <div id="quiz1" class="screen">
+        <div class="quiz">
+            <h3>1. Which is our happiest memory? 😊</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'quiz1')">A. Dmart 🛒</div>
+                <div class="option" onclick="selectOption(this, 'quiz1')">B. Kovil 🛕</div>
+                <div class="option" onclick="selectOption(this, 'quiz1')">C. V2 function 💻</div>
+                <div class="option" onclick="selectOption(this, 'quiz1')">D. Colours 😂🎨</div>
+            </div>
+            <button id="nextQuiz1" onclick="nextScreen('quiz2')" disabled>Next ➡️</button>
+        </div>
+    </div>
 
-<div class="container">
+    <div id="quiz2" class="screen">
+        <div class="quiz">
+            <h3>2. Guess my fav song 🎵</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'quiz2')">A. Manmadhane</div>
+                <div class="option" onclick="selectOption(this, 'quiz2')">B. Kananal kannala</div>
+                <div class="option" onclick="selectOption(this, 'quiz2')">C. Pidikudhee</div>
+                <div class="option" onclick="selectOption(this, 'quiz2')">D. Anbil avan</div>
+            </div>
+            <button onclick="nextScreen('quiz3')">Next ➡️</button>
+        </div>
+    </div>
 
-<img id="photo" src="photo1.jpg">
+    <div id="quiz3" class="screen">
+        <div class="quiz">
+            <h3>3. Fav movie 🎥 that we watched together</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'quiz3')">A. Dada</div>
+                <div class="option" onclick="selectOption(this, 'quiz3')">B. Sithramam</div>
+                <div class="option" onclick="selectOption(this, 'quiz3')">C. Love today</div>
+                <div class="option" onclick="selectOption(this, 'quiz3')">D. Dear comrade</div>
+            </div>
+            <button onclick="nextScreen('quiz4')">Next ➡️</button>
+        </div>
+    </div>
 
-<video id="video" controls style="display:none;">
-<source id="videosrc" src="">
-</video>
+    <div id="quiz4" class="screen">
+        <div class="quiz">
+            <h3>4. The thing u like and hate in me 💭</h3>
+            <input type="text" id="q4Answer" placeholder="Type here (max 200 chars)..." maxlength="200">
+            <button onclick="nextScreen('results')">Submit & View Results ✨</button>
+        </div>
+    </div>
 
-<br>
+    <div id="results" class="screen">
+        <h2>Your Answers! 💖</h2>
+        <div class="results" id="resultsContent"></div>
+        <button id="nextWish" onclick="nextScreen('wish')" style="display:none;">Make a Wish! 🎂</button>
+    </div>
 
-<button id="nextBtn" onclick="next()">Next</button>
+    <div id="wish" class="screen">
+        <h1>Make a Wish! 🎈✨💫</h1>
+    </div>
 
-</div>
+    <script>
+        let currentPhoto = 0, currentVideo = 0;
+        const photos = Array.from({length:10}, (_,i)=>`photo${i+1}.jpg`);
+        const videos = ['video1.mp4', 'video2.mp4'];
+        const answers = {};
 
-<div id="final">
-<h1>🎂 Happy Birthday my sayali 💗🫂</h1>
-<div style="font-size:60px">🎂🕯️🕯️🕯️</div>
-<p>
-Happy Birthday my dear ❤️  
-You are the most special person in my life.  
-May your day be filled with happiness
-Always keep smiling 😊
-thank you di....ne epayum enkuda erunthu eruka
-and namba evalo sanda potalum u still choses me❤️
-ithuku mela sona ne scene poduva.....ithoda stop panikuren
-once again happiest bday my darling💗
-</p>
-</div>
+        // 3-2-1 Countdown
+        let count = 3;
+        const countdownEl = document.getElementById('count');
+        const countdownInt = setInterval(() => {
+            countdownEl.textContent = count;
+            countdownEl.style.transform = `scale(${1 + (3-count)*0.1})`;
+            count--;
+            if (count < 0) {
+                clearInterval(countdownInt);
+                setTimeout(() => nextScreen('birthday'), 800);
+            }
+        }, 800);
 
-<script>
+        function nextScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            if (screenId === 'photos') showPhoto(0);
+            if (screenId === 'videos') showVideo(0);
+            if (screenId === 'results') showResults();
+        }
 
-let photos=[
-"photo1.jpg",
-"photo2.jpg",
-"photo3.jpg",
-"photo4.jpg",
-"photo5.jpg",
-"photo6.jpg",
-"photo7.jpg",
-"photo8.jpg",
-"photo9.jpg",
-"photo10.jpg"
-];
+        function showPhoto(index) {
+            for(let i=1; i<=10; i++) document.getElementById(`photo${i}`)?.style.setProperty('display', 'none');
+            if (index < 10) {
+                document.getElementById(`photo${index+1}`)?.style.setProperty('display', 'block');
+                document.getElementById('nextPhoto').style.display = 'inline-block';
+            } else nextScreen('videos');
+        }
 
-let videos=[
-"video1.mp4",
-"video2.mp4"
-];
+        function nextPhoto() { currentPhoto++; showPhoto(currentPhoto); }
 
-let index=0;
+        function showVideo(index) {
+            for(let i=1; i<=2; i++) document.getElementById(`video${i}`)?.style.setProperty('display', 'none');
+            document.getElementById('nextVideo').style.display = index < 1 ? 'inline-block' : 'none';
+            document.getElementById('quizBtn').style.display = index === 1 ? 'inline-block' : 'none';
+            if (index < 2) {
+                const video = document.getElementById(`video${index+1}`);
+                video.style.display = 'block';
+                video.play().catch(()=>null);
+            }
+        }
 
-function next(){
+        function nextVideo() { currentVideo++; showVideo(currentVideo); }
 
-index++;
+        function selectOption(el, quizId) {
+            document.querySelectorAll(`#${quizId} .option`).forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            answers[quizId] = el.textContent;
+            document.getElementById('nextQuiz1')?.removeAttribute('disabled');
+        }
 
-if(index<photos.length){
-
-document.getElementById("photo").style.display="block";
-document.getElementById("video").style.display="none";
-document.getElementById("photo").src=photos[index];
-
-}
-
-else if(index==photos.length){
-
-document.getElementById("photo").style.display="none";
-document.getElementById("video").style.display="block";
-document.getElementById("videosrc").src=videos[0];
-document.getElementById("video").load();
-
-}
-
-else if(index==photos.length+1){
-
-document.getElementById("videosrc").src=videos[1];
-document.getElementById("video").load();
-document.getElementById("nextBtn").style.display="none";
-
-document.getElementById("video").onended=function(){
-document.querySelector(".container").style.display="none";
-document.getElementById("final").style.display="block";
-}
-
-}
-
-}
-
-</script>
-
+        function showResults() {
+            answers.q4 = document.getElementById('q4Answer').value || 'No answer';
+            let html = '<h3 style="margin-bottom:20px;">Your Sweet Answers 💕</h3>';
+            Object.entries(answers).forEach(([q,ans]) => {
+                html += `<p><strong>Q${q.slice(-1)}:</strong> ${ans}</p>`;
+            });
+            document.getElementById('resultsContent').innerHTML = html;
+            setTimeout(() => document.getElementById('my darling').style.display = 'inline-block', 1500);
+        }
+    </script>
 </body>
 </html>
